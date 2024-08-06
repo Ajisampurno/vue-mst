@@ -7,6 +7,7 @@ const http = axios.create({
 http.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers["Accept"]= 'application/json';
     return config;
 });
 
