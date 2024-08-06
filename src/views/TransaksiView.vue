@@ -26,16 +26,11 @@
                                     <select v-model="transaction.cust_id" class="form-control form-control-sm">
                                         <option selected disabled>select customer</option>
                                         <option v-for="customer in customers" :key="customer.cust_id"
-                                            :value="customer.cust_id">
-                                            {{ customer.nama }}
+                                            :value="customer.id">
+                                            {{ customer.kode }} | {{ customer.nama }}
                                         </option>
                                     </select>
                                 </div>
-
-                                <button type="button" class="btn btn-secondary" @click="showCustomerModal = true">Select
-                                    Customer</button>
-
-
                             </div>
                         </div>
 
@@ -66,34 +61,34 @@
                                 <tbody>
                                     <tr v-for="(item, index) in cartItems" :key="index">
                                         <td class="text-center">{{ index + 1 }}</td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.kode" type="text" class="form-table"
                                                 style="width: 60px;" readonly :value="item.kode">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.nama" type="text" class="form-table" readonly>
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.qty" type="text" class="form-table"
                                                 style="width: 30px;" readonly :value="item.qty">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.harga_bandrol" type="text" class="form-table"
                                                 style="width: 70px;" readonly :value="item.harga_bandrol">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.diskon_pct" type="text" class="form-table"
                                                 style="width: 30px;" readonly :value="item.diskon_pct">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.diskon_nilai" type="text" class="form-table"
                                                 style="width: 90px;" readonly :value="item.diskon_nilai">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.harga_diskon" type="text" class="form-table"
                                                 style="width: 90px;" readonly :value="item.harga_diskon">
                                         </td>
-                                        <td class="">
+                                        <td>
                                             <input v-model="item.total" type="text" class="form-table"
                                                 style="width: 90px;" readonly :value="item.total">
                                         </td>
@@ -124,14 +119,16 @@
                                                 <td class="px-2">Diskon</td>
                                                 <td class="px-2">:</td>
                                                 <td class="px-2">
-                                                    <input v-model="transaction.diskon" type="text" class="form-table">
+                                                    <input v-model="transaction.diskon" type="text"
+                                                        style="max-width: 70px;">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="px-2">Ongkir</td>
                                                 <td class="px-2">:</td>
                                                 <td class="px-2">
-                                                    <input v-model="transaction.ongkir" type="text" class="form-table">
+                                                    <input v-model="transaction.ongkir" type="text"
+                                                        style="max-width: 70px;">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -148,7 +145,7 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary mx-2" @click="submitCart">Submit</button>
+                            <button type="submit" class="btn btn-primary mx-2" @click="submit">Submit</button>
                             <button type="button" class="btn btn-secondary mx-2" @click="cancel">Cancel</button>
                         </div>
                     </form>
@@ -235,49 +232,6 @@
             <!-- Backdrop -->
             <div v-if="showModal" class="modal-backdrop fade show"></div>
 
-            <!--Modal Customer-->
-            <div v-if="showCustomerModal" class="modal fade show" style="display: block;" aria-modal="true"
-                role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Select Cust</h5>
-                            <button type="button" class="close" @click="closeCustomerModal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="kode">Kode:</label>
-                                <select id="kode" v-model="selectedCustomerId" class="form-control"
-                                    @change="fetchCustomerDetails">
-                                    <option value="">Select Customer</option>
-                                    <option v-for="customer in customers" :key="customer.id" :value="customer.id">{{
-                                        customer.kode }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input v-model="selectedCustomer.nama" type="text" class="form-control form-control-sm"
-                                    readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Telp</label>
-                                <input v-model="selectedCustomer.telp" type="text" class="form-control form-control-sm"
-                                    readonly>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="closeCustomerModal">Close</button>
-                            <button type="button" class="btn btn-primary" @click="addToCartCust">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Backdrop -->
-            <div v-if="showCustomerModal" class="modal-backdrop fade show"></div>
-
         </div>
 
     </Layout>
@@ -292,22 +246,9 @@ import Layout from '@/layouts/layout.vue';
 export default {
     data() {
         return {
-            isEditMode: false,
-            showCustomerModal: false,
-            selectedCustomerId: '',
-            selectedCustomer: {
-                nama: '',
-                telp: ''
-            },
+            customers: [],
 
-            transaction: {
-                kode: this.generateTransactionNumber(),
-                tgl: '',
-                cust_id: null,
-                diskon: 0,
-                ongkir: 0,
-                cartItems: [],
-            },
+            isEditMode: false,
             cart: {
                 barang_id: null,
                 kode: '',
@@ -319,17 +260,21 @@ export default {
                 harga_diskon: '',
                 total: ''
             },
-            cartCust: {
-                kode: '',
-                nama: '',
-                telp: ''
-            },
             cartItems: [],
-            cartCusts: [],
             showModal: false,
             barangs: [],
-            customers: [],
-            editIndex: null
+            editIndex: null,
+
+            transaction: {
+                kode: this.generateTransactionNumber(),
+                tgl: '',
+                cust_id: null,
+                subtotal: 0,
+                diskon: 0,
+                ongkir: 0,
+                total_bayar: 0,
+                cartItems: [],
+            },
         };
     },
     computed: {
@@ -343,6 +288,15 @@ export default {
             }
             ret.total_bayar = ret.subtotal - this.transaction.diskon + this.transaction.ongkir;
             return ret;
+        }
+    },
+    watch: {
+        cartItems: {
+            handler() {
+                this.transaction.subtotal = this.summary.subtotal;
+                this.transaction.total_bayar = this.summary.total_bayar;
+            },
+            deep: true
         }
     },
     methods: {
@@ -370,10 +324,10 @@ export default {
         },
         generateTransactionNumber() {
             const now = new Date();
-            const datePart = now.toISOString().split('T')[0].replace(/-/g, '');
+            //const datePart = now.toISOString().split('T')[0].replace(/-/g, '');
             const timePart = now.toTimeString().split(' ')[0].replace(/:/g, '');
             const randomPart = Math.floor(Math.random() * 1000);
-            return `TRX-${datePart}${timePart}-${randomPart}`;
+            return `TRX-${timePart}-${randomPart}`;
         },
 
         updateProductDetails() {
@@ -384,31 +338,6 @@ export default {
                 this.cart.harga_bandrol = selectedProduct.harga;
                 this.updateTotals();
             }
-        },
-
-        //Modal customer
-        fetchCustomerDetails() {
-            const customer = this.customers.find(cust => cust.id === this.selectedCustomerId);
-            if (customer) {
-                this.selectedCustomer.nama = customer.nama;
-                this.selectedCustomer.telp = customer.telp;
-            } else {
-                this.selectedCustomer.nama = '';
-                this.selectedCustomer.telp = '';
-            }
-        },
-        addToCartCust() {
-
-            this.cartCusts.push({ ...this.cartCust });
-
-            localStorage.setItem('cartCust', JSON.stringify(this.cartCusts));
-
-            this.cartCusts = { kode: '', nama: '', telp: '' };
-
-            this.showCustomerModal = false;
-        },
-        closeCustomerModal() {
-            this.showCustomerModal = false;
         },
 
         //Modal item
@@ -440,25 +369,20 @@ export default {
             this.cart = { barang_id: null, kode: '', nama: '', harga_bandrol: '', qty: 1, diskon_pct: 0, diskon_nilai: '', harga_diskon: '', total: '' };
             this.editIndex = null;
         },
-        async submitCart() {
+        submit() {
             http.post('/transaksis', this.transaction)
                 .then(response => {
-                    this.transaction = response.data
-                    console.log(this.transaction);
+                    console.log('Transaction created successfully:', response.data);
+                    this.$router.push({ name: 'daftar-transaksi' });
                 })
-            //try {
-            //    const response = await http.post('/transaksis', {
-            //        items: this.transaction,
-            //    });
-            //    console.log('Cart submitted successfully', response.data);
-            //} catch (error) {
-            //    console.error('Error submitting cart', error);
-            //}
+                .catch(error => {
+                    console.error('Error creating transaction:', error.response.data);
+                });
         }
     },
     mounted() {
         this.fetchData();
-
+        this.transaction.subtotal = this.summary.subtotal;
         const savedCartItems = localStorage.getItem('cartItems');
         if (savedCartItems) {
             this.cartItems = JSON.parse(savedCartItems);

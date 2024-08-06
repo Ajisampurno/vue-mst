@@ -46,6 +46,22 @@
                             </p>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link to="/daftar-customer" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Daftar Customer
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/daftar-barang" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Daftar Barang
+                            </p>
+                        </router-link>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

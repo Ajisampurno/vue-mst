@@ -5,6 +5,8 @@ import LoginView from '@/views/Auth/LoginView.vue'
 import RegisterView from '@/views/Auth/RegisterView.vue'
 import TransaksiView from '@/views/TransaksiView.vue'
 import DaftarTransaksiView from '@/views/DaftarTransaksiView.vue'
+import DaftarCustomerView from '@/views/DaftarCustomerView.vue'
+import DaftarBarangView from '@/views/DaftarBarangView.vue'
 
 // Function to check if user is authenticated
 function isAuthenticated() {
@@ -46,6 +48,18 @@ const router = createRouter({
       path: '/daftar-transaksi',
       name: 'daftar-transaksi',
       component: DaftarTransaksiView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/daftar-customer',
+      name: 'daftar-customer',
+      component: DaftarCustomerView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/daftar-barang',
+      name: 'daftar-barang',
+      component: DaftarBarangView,
       meta: { requiresAuth: true }
     }
   ]
