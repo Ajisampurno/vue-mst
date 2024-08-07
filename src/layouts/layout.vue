@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
-        <Navbar />
         <Sidebar />
+        <Navbar />
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Main content -->

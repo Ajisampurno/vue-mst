@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside :class="{ 'sidebar-hidden': isMobile }" class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
@@ -8,59 +8,39 @@
         </a>
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-                        alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
-                </div>
-            </div>
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <router-link to="/dashboard" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Dashboard
-                            </p>
-                        </router-link>
+                        <a href="/dashboard" class="nav-link">
+                            <i class="bi bi-speedometer2"></i>
+                            <p>Dashboard</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/transaksi" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Form Transaksi
-                            </p>
-                        </router-link>
+                        <a href="/transaksi" class="nav-link">
+                            <i class="bi bi-cash-coin"></i>
+                            <p>Form Transaksi</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/daftar-transaksi" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Daftar Transaksi
-                            </p>
-                        </router-link>
+                        <a href="/daftar-transaksi" class="nav-link">
+                            <i class="bi bi-card-list"></i>
+                            <p>Daftar Transaksi</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/daftar-customer" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Daftar Customer
-                            </p>
-                        </router-link>
+                        <a href="/daftar-customer" class="nav-link">
+                            <i class="bi bi-people-fill"></i>
+                            <p>Daftar Customer</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/daftar-barang" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Daftar Barang
-                            </p>
-                        </router-link>
+                        <a href="/daftar-barang" class="nav-link">
+                            <i class="bi bi-box-seam-fill"></i>
+                            <p>Daftar Barang</p>
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -72,10 +52,22 @@
 
 <script>
 export default {
-    name: 'Sidebar'
+    name: 'Sidebar',
+    computed: {
+        isMobile() {
+            return window.innerWidth < 768; // Atur ukuran layar untuk mobile
+        }
+    },
+    mounted() {
+        window.addEventListener('resize', this.handleResize);
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    },
+    methods: {
+        handleResize() {
+            this.$forceUpdate(); // Memaksa pembaruan untuk reaktifitas
+        }
+    }
 }
 </script>
-
-<style scoped>
-/* Tambahkan gaya kustom Anda di sini */
-</style>
