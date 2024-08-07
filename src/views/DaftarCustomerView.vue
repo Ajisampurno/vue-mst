@@ -1,4 +1,6 @@
 <template>
+    <Navbar />
+    <Sidebar />
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -118,11 +120,17 @@
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue'
+import Sidebar from '@/components/Sidebar.vue'
 import axios from '@/plugins/axios'
 import Swal from 'sweetalert2';
 
 
 export default {
+    components: {
+        Navbar,
+        Sidebar
+    },
     data() {
         return {
             customers: [],

@@ -1,4 +1,6 @@
 <template>
+    <Navbar />
+    <Sidebar />
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -268,8 +270,14 @@
 
 <script>
 import http from '@/plugins/axios'
+import Navbar from '@/components/Navbar.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
+    components: {
+        Navbar,
+        Sidebar
+    },
     data() {
         return {
             customers: [],

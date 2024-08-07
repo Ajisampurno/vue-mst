@@ -1,5 +1,5 @@
 <template>
-    <aside :class="{ 'sidebar-hidden': isMobile }" class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
@@ -13,34 +13,44 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="/dashboard" class="nav-link">
+                        <router-link to="/dashboard" class="nav-link">
                             <i class="bi bi-speedometer2"></i>
-                            <p>Dashboard</p>
-                        </a>
+                            <p>
+                                Dashboard
+                            </p>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="/transaksi" class="nav-link">
+                        <router-link to="/transaksi" class="nav-link">
                             <i class="bi bi-cash-coin"></i>
-                            <p>Form Transaksi</p>
-                        </a>
+                            <p>
+                                Form Transaksi
+                            </p>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="/daftar-transaksi" class="nav-link">
+                        <router-link to="/daftar-transaksi" class="nav-link">
                             <i class="bi bi-card-list"></i>
-                            <p>Daftar Transaksi</p>
-                        </a>
+                            <p>
+                                Daftar Transaksi
+                            </p>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="/daftar-customer" class="nav-link">
+                        <router-link to="/daftar-customer" class="nav-link">
                             <i class="bi bi-people-fill"></i>
-                            <p>Daftar Customer</p>
-                        </a>
+                            <p>
+                                Daftar Customer
+                            </p>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="/daftar-barang" class="nav-link">
+                        <router-link to="/daftar-barang" class="nav-link">
                             <i class="bi bi-box-seam-fill"></i>
-                            <p>Daftar Barang</p>
-                        </a>
+                            <p>
+                                Daftar Barang
+                            </p>
+                        </router-link>
                     </li>
                 </ul>
             </nav>
@@ -52,22 +62,10 @@
 
 <script>
 export default {
-    name: 'Sidebar',
-    computed: {
-        isMobile() {
-            return window.innerWidth < 768; // Atur ukuran layar untuk mobile
-        }
-    },
-    mounted() {
-        window.addEventListener('resize', this.handleResize);
-    },
-    beforeUnmount() {
-        window.removeEventListener('resize', this.handleResize);
-    },
-    methods: {
-        handleResize() {
-            this.$forceUpdate(); // Memaksa pembaruan untuk reaktifitas
-        }
-    }
+    name: 'Sidebar'
 }
 </script>
+
+<style scoped>
+/* Tambahkan gaya kustom Anda di sini */
+</style>

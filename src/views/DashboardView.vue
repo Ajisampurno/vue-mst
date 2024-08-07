@@ -1,4 +1,6 @@
 <template>
+    <Navbar />
+    <Sidebar />
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -24,9 +26,14 @@
 <script>
 import DonutChart from '@/components/chart/DonutChart.vue'
 
+import Navbar from '@/components/Navbar.vue'
+import Sidebar from '@/components/Sidebar.vue'
+
 export default {
     components: {
         DonutChart,
+        Navbar,
+        Sidebar
     }
 };
 </script>
