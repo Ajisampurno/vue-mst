@@ -4,7 +4,7 @@
         <a href="#" class="brand-link">
             <img src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                 class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">Admin MST</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -65,7 +65,3 @@ export default {
     name: 'Sidebar'
 }
 </script>
-
-<style scoped>
-/* Tambahkan gaya kustom Anda di sini */
-</style>

@@ -168,13 +168,11 @@ export default {
         },
         async addCustomer() {
             try {
-                // Generate kode automatically
                 this.newCustomer.kode = 'C' + (this.customers.length + 1).toString().padStart(3, '0')
                 const response = await axios.post('/customers', this.newCustomer)
                 this.customers.push(response.data)
                 this.newCustomer = { kode: '', nama: '', telp: '' }
                 this.closeAddModal()
-                // SweetAlert for success
                 Swal.fire({
                     icon: 'success',
                     title: 'Customer Added',
@@ -182,7 +180,6 @@ export default {
                     confirmButtonText: 'OK'
                 });
             } catch (error) {
-                // SweetAlert for error
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -206,7 +203,6 @@ export default {
                     'success'
                 );
             } catch (error) {
-                // Error alert
                 Swal.fire(
                     'Error!',
                     'There was an error deleting the customer. Please try again.',
@@ -225,7 +221,6 @@ export default {
                     'success'
                 );
             } catch (error) {
-                // Error alert
                 Swal.fire(
                     'Error!',
                     'There was an error deleting the barang. Please try again.',
@@ -240,7 +235,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-/* Add any custom styles here */
-</style>

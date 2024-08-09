@@ -7,13 +7,6 @@
                     <i class="bi bi-list"></i>
                 </a>
             </li>
-
-            <li class="nav-item d-none d-sm-inline-block">
-                <router-link to="dashboard" class="nav-link">Dashboard</router-link>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <router-link to="/daftar-transaksi" class="nav-link">Transaksi</router-link>
-            </li>
         </ul>
 
         <!-- Right navbar links -->
@@ -49,17 +42,12 @@ export default {
 </script>
 
 <style scoped>
-/* Gaya default untuk ikon SVG */
 .nav-link .icon {
     fill: #000;
-    /* Warna default */
     transition: fill 0.3s ease;
-    /* Transisi warna */
 }
 
-/* Efek hover */
 .nav-link:hover .icon {
     fill: #007bff;
-    /* Warna saat hover */
 }
 </style>

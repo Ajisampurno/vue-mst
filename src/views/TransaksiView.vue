@@ -272,6 +272,7 @@
 import http from '@/plugins/axios'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import Swal from 'sweetalert2';
 
 export default {
     components: {
@@ -318,9 +319,10 @@ export default {
                 total_bayar: 0
             };
             for (var i = 0; i < this.cartItems.length; i++) {
-                ret.subtotal += Math.round(this.cartItems[i].total * 1, 2);
+                ret.subtotal += parseFloat(this.cartItems[i].total);
             }
-            ret.total_bayar = ret.subtotal - this.transaction.diskon + this.transaction.ongkir;
+            var diskonAmount = ret.subtotal * (this.transaction.diskon / 100);
+            ret.total_bayar = Number(ret.subtotal - diskonAmount) + parseFloat(this.transaction.ongkir);
             return ret;
         }
     },
@@ -361,7 +363,7 @@ export default {
             //const datePart = now.toISOString().split('T')[0].replace(/-/g, '');
             const timePart = now.toTimeString().split(' ')[0].replace(/:/g, '');
             const randomPart = Math.floor(Math.random() * 1000);
-            return `TRX-${timePart}-${randomPart}`;
+            return `SALE-2024-${randomPart}`;
         },
 
         updateProductDetails() {
@@ -382,11 +384,8 @@ export default {
             } else {
                 this.cartItems.push({ ...this.cart });
             }
-
             localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-
             this.cart = { barang_id: null, kode: '', nama: '', harga_bandrol: '', qty: 1, diskon_pct: 0, diskon_nilai: '', harga_diskon: '', total: '' };
-
             this.showModal = false;
         },
         removeFromCart(index) {
@@ -406,13 +405,28 @@ export default {
         submit() {
             http.post('/transaksis', this.transaction)
                 .then(response => {
-                    console.log('Transaction created successfully:', response.data);
-                    this.$router.push({ name: 'daftar-transaksi' });
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Data berhasil dikirim',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+
+                    localStorage.removeItem('cartItems'); // Clear cart items from local storage
+                    this.$router.push('/daftar-transaksi');
                 })
                 .catch(error => {
-                    console.error('Error creating transaction:', error.response.data);
+                    console.error('Error during transaction submission:', error);
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan saat mengirim data',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
         }
+
     },
     mounted() {
         this.fetchData();

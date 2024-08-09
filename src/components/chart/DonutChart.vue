@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from '@/plugins/axios';
 import VueApexCharts from 'vue3-apexcharts';
 
 export default {
@@ -13,21 +14,36 @@ export default {
     },
     data() {
         return {
-            series: [44, 55, 41, 17, 15],  // Data untuk diagram donut
+            series: [],  // Data untuk diagram donut
             chartOptions: {
                 chart: {
                     type: 'donut'
                 },
-                labels: ['Apples', 'Oranges', 'Berries', 'Grapes', 'Bananas']  // Label untuk masing-masing data
+                labels: []  // Label untuk masing-masing data
             }
         };
+    },
+    mounted() {
+        this.fetchSalesPercentage();
+    },
+    methods: {
+        async fetchSalesPercentage() {
+            try {
+                const response = await axios.get('/sales-by-product');
+                const data = response.data;
+
+                this.series = data.map(item => item.percentage);
+
+                // Memperbarui seluruh objek chartOptions
+                this.chartOptions = {
+                    ...this.chartOptions, // Tetap mempertahankan properti lain dalam chartOptions
+                    labels: data.map(item => item.nama)
+                };
+
+            } catch (error) {
+                console.error('Error fetching sales percentage:', error);
+            }
+        }
     }
 };
 </script>
-
-<style scoped>
-.apexcharts-canvas {
-    max-width: 100%;
-    margin: 0 auto;
-}
-</style>

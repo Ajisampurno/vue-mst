@@ -171,13 +171,11 @@ export default {
         },
         async addbarang() {
             try {
-                // Generate kode automatically
                 this.newbarang.kode = 'C' + (this.barangs.length + 1).toString().padStart(3, '0')
                 const response = await axios.post('/barangs', this.newbarang)
                 this.barangs.push(response.data)
                 this.newbarang = { kode: '', nama: '', harga: '' }
                 this.closeAddModal()
-                // SweetAlert for success
                 Swal.fire({
                     icon: 'success',
                     title: 'Customer Added',
@@ -185,7 +183,6 @@ export default {
                     confirmButtonText: 'OK'
                 });
             } catch (error) {
-                // SweetAlert for error
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -203,7 +200,6 @@ export default {
                     this.barangs[index] = response.data
                 }
                 this.closeEditModal()
-                // SweetAlert for success
                 Swal.fire({
                     icon: 'success',
                     title: 'Barang Added',
@@ -211,7 +207,6 @@ export default {
                     confirmButtonText: 'OK'
                 });
             } catch (error) {
-                // SweetAlert for error
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -225,14 +220,12 @@ export default {
             try {
                 await axios.delete(`/barangs/${barangId}`)
                 this.barangs = this.barangs.filter(c => c.id !== barangId)
-                // Success alert
                 Swal.fire(
                     'Deleted!',
                     'The barang has been deleted.',
                     'success'
                 );
             } catch (error) {
-                // Error alert
                 Swal.fire(
                     'Error!',
                     'There was an error deleting the barang. Please try again.',
@@ -247,7 +240,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-/* Add any custom styles here */
-</style>
