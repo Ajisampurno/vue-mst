@@ -403,8 +403,11 @@ export default {
             this.editIndex = null;
         },
         submit() {
+            this.transaction.cartItems = this.cartItems;
+            console.log(this.transaction)
             http.post('/transaksis', this.transaction)
                 .then(response => {
+                    console.log(response.data);
                     Swal.fire({
                         title: 'Berhasil!',
                         text: 'Data berhasil dikirim',
@@ -412,7 +415,8 @@ export default {
                         confirmButtonText: 'OK'
                     });
 
-                    localStorage.removeItem('cartItems'); // Clear cart items from local storage
+                    localStorage.removeItem('cartItems');
+                    this.cartItems = [];
                     this.$router.push('/daftar-transaksi');
                 })
                 .catch(error => {
